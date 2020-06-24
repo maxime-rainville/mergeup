@@ -18,6 +18,13 @@ mergeup will:
   * find what other branches exists for this release line
   * compare each branch to the next sequential one to see if any commits are missing
 
+You can pass the `ONLY_UPDATE` flag if you only want to see module that require merge ups.
+
+```bash
+ONLY_UPDATE=1 node ~/path/to/build/main/index.js
+```
+
+
 
 # Sample output
 ```md
@@ -47,3 +54,4 @@ mergeup will:
 ...
 ```
 
+Note that the order of module can change on each run because it fetches the git information for each module asyncronously.

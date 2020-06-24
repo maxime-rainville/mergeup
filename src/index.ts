@@ -12,36 +12,42 @@ if (!fs.existsSync(path)) {
 
 let modules = listDirectory(path).map(modulePath => path + modulePath);
 
-if (fs.existsSync('vendor/cwp')) {
-    modules = modules.concat(
-        listDirectory('vendor/cwp').map(modulePath => 'vendor/cwp/' + modulePath)
-    );
-}
+const otherVendors = [
+    'cwp',
+    'dnadesign',
+    'symbiote',
+    'bringyourownideas',
+    'colymba',
+    'tijsverkoyen',
+    'tractorcow'
+];
 
-if (fs.existsSync('vendor/dnadesign')) {
-    modules = modules.concat(
-        listDirectory('vendor/dnadesign').map(modulePath => 'vendor/dnadesign/' + modulePath)
-    );
-}
-
-if (fs.existsSync('vendor/symbiote')) {
-    modules = modules.concat(
-        listDirectory('vendor/symbiote').map(modulePath => 'vendor/symbiote/' + modulePath)
-    );
-}
-
+otherVendors.forEach((vendor) => {
+    const path = `vendor/${vendor}`;
+    if (fs.existsSync(path)) {
+        modules = modules.concat(
+            listDirectory(path).map(modulePath => `${path}/${modulePath}`)
+        );
+    }
+})
 
 modules
     .map(findChangeSet)
     .forEach(promise => {
         promise.then(({path, results}) => {
-            console.log('# ' + path);
+            let outputChange = !(process.env.ONLY_UPDATE);
+            let output = '# ' + path + "\n";
             for (const key in results) {
                 const commits = results[key];
-                console.log(`* ${key}` + (commits.length === 0 ? `: all up-to-date`: ''));
-                commits.forEach(commit => console.log(`  * ${commit}`))
+                outputChange = outputChange || commits.length > 0;
+                output += `* ${key}` + (commits.length === 0 ? `: all up-to-date`: '') + "\n";
+                commits.forEach(commit => (output += `  * ${commit}` + "\n"))
             }
-            console.log('');
+            output += "\n";
+
+            if (outputChange) {
+                console.log(output);
+            }
         })
         .catch(() => {});
     });
