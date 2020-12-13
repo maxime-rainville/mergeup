@@ -15,11 +15,11 @@ Report which silverstripe module need to be merge up
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g mergeup
+$ npm install -g silverstripe-cms-mergeup
 $ mergeup COMMAND
 running command...
 $ mergeup (-v|--version|version)
-mergeup/0.0.0 linux-x64 node-v10.19.0
+silverstripe-cms-mergeup/0.0.0 linux-x64 node-v10.19.0
 $ mergeup --help [COMMAND]
 USAGE
   $ mergeup COMMAND
