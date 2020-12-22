@@ -19,7 +19,7 @@ $ npm install -g silverstripe-cms-mergeup
 $ mergeup COMMAND
 running command...
 $ mergeup (-v|--version|version)
-silverstripe-cms-mergeup/0.0.0 linux-x64 node-v10.19.0
+silverstripe-cms-mergeup/0.1.0 linux-x64 node-v10.19.0
 $ mergeup --help [COMMAND]
 USAGE
   $ mergeup COMMAND
