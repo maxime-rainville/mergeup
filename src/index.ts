@@ -60,9 +60,9 @@ class Mergeup extends Command {
     const {token, commits: showCommits, needMergeOnly, filter, output, supportedOnly} = flags;
 
     // Init the GitHub Rest client
-    if (token || process.env.TRAVIS_TOKEN) {
+    if (token || process.env.GITHUB_TOKEN) {
       this.octokit = new Octokit({
-        auth: token ?? process.env.TRAVIS_TOKEN
+        auth: token ?? process.env.GITHUB_TOKEN
       });
     }
 
