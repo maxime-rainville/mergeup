@@ -1,7 +1,7 @@
 {
   "name": "silverstripe-cms-mergeup",
   "description": "Report which silverstripe module need to be merge up",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "author": "Maxime Rainville @maxime-rainville",
   "bin": {
     "mergeup": "./bin/run"
@@ -12,7 +12,7 @@
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.0",
     "@octokit/rest": "^18.0.12",
-    "silverstripe-cms-meta": "0.0.3",
+    "silverstripe-cms-meta": "^0.0.5",
     "tslib": "^1.14.1"
   },
   "devDependencies": {

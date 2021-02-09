@@ -30,7 +30,7 @@ class Mergeup extends Command {
 
   private octokit = new Octokit({ });
 
-  private throttle = new Throttle(10);
+  private throttle = new Throttle(5);
 
   static description = 'Display Silverstripe module that have outstanding commits to merge up'
 
@@ -44,6 +44,7 @@ class Mergeup extends Command {
     filter: flags.string({char: 'f', description: 'Filter by module name'}),
     output: flags.enum({char: 'o', options: ['pretty', 'json'], default: 'pretty', description: 'Control the output format'}),
     supportedOnly: flags.boolean({default: false, description: 'Limit results to supported module'}),
+    throttle: flags.integer({default: 5, description: 'Number of concurent API requests that can be run.'})
   }
 
   static args = [{name: 'file'}]
@@ -57,7 +58,7 @@ class Mergeup extends Command {
   async run() {
     const {args, flags} = this.parse(Mergeup)
 
-    const {token, commits: showCommits, needMergeOnly, filter, output, supportedOnly} = flags;
+    const {token, commits: showCommits, needMergeOnly, filter, output, supportedOnly, throttle} = flags;
 
     // Init the GitHub Rest client
     if (token || process.env.GITHUB_TOKEN) {
@@ -65,6 +66,8 @@ class Mergeup extends Command {
         auth: token ?? process.env.GITHUB_TOKEN
       });
     }
+
+    this.throttle = new Throttle(throttle);
 
     // Fetch merges UP from GitHub
     const dataFetches = this.getRepos(supportedOnly)
